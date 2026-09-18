@@ -1,14 +1,17 @@
 import requests
 from requests.exceptions  import HTTPError, RequestException
-def get_data(url, 
-             params=None,
-             timeout =10):
+def get_data(url, params=None, timeout =10):
     try: 
-        response = requests.get(url, params=params, headers=None, timeout= timeout)
+        response = requests.get(url, params=params, headers=None, timeout=timeout)
 
         print("Request URL:", response.url)
         response.raise_for_status()
-        return response.json()
+
+        return {
+           "success":True,
+           "status_code": response.status_code,
+           "data": response.json()
+        }
 
     except HTTPError as htt_err:
         status_code = response.status_code
